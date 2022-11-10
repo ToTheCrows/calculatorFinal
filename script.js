@@ -21,7 +21,18 @@ for(let count=0;count<buttons.length;count++) {
 }
 
 function operateAll() {
-    evaluator(stringNum);
+    const outputVar = document. querySelector(".output");
+    let checker = evaluatorError(obj.stringNum);
+
+    console.log(checker);
+    if( checker != 1 ) {
+        deleteAll();
+        outputVar.textContent="ERROR!";
+    }
+    else {
+        obj.operator = getOperator(obj.stringNum);
+    }
+
 
 }
 
@@ -63,18 +74,31 @@ function divide() {
     return obj.num1/obj.num2;
 }
 
-//Evaluator function to find and return operator into obj.operator
-function evaluator() {
-    //ERROR evaluation if more than one operator
+//ERROR evaluation if more than one operator
+function evaluatorError(string) {
     let array = ["+","-","*","/"];
-    let errorcounter=0;
-    
-    //check through stringNum for multiple operators and return to operateAll
-    for(let counter=0;counter < array.length;counter++) {
-        errorcounter=obj.stringNum.filter( x => x==array[count]).length
-        if(errorcounter>1) {
-            return -1;
+    let count = 0;
+    array.forEach(element => {
+        for( let n=0;n<string.length;n++){
+            if(element == string[n]) count++;
         }
-    }
-    return 1;
+    });
+
+    console.log(count);
+    return count;
 }
+
+//Get Operator of stringNum after Error-Check
+function getOperator(string) {
+    let array = ["+","-","*","/"];
+    let x;
+    x=array.forEach(element => {
+        for(let n=0;n<string.length;n++) {
+            console.log(string[n]);
+            console.log(element);
+            if( string[n]==element ) return n;
+        }
+    });
+    console.log(array[x]);
+    return array[x];
+}   
