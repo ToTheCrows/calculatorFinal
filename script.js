@@ -2,15 +2,15 @@
 const outputContainer = document.querySelector(".output-container");
 const buttons = document.querySelectorAll("button");
 
-//Object for whole calculator process (globally for the sake of ease)
-let obj = {
-    stringNum: "",
-    num: [],
-    operator: [],
-    n: 0,
-    output: "",
-    tempSum:0
-}
+//Variables for whole calculator process (globally for the sake of ease)
+let stringNum= "";
+let num = [];
+let numCount=0;
+let operator=[];
+let operatorCount=0;
+let opIndex = [];
+
+
 
 //addEventListener for all buttons with further evaluation
 for (let count = 0; count < buttons.length; count++) {
@@ -19,7 +19,9 @@ for (let count = 0; count < buttons.length; count++) {
             addToString(buttons[count].value);
         }
         else if (buttons[count].classList.contains("operator") ){
+            getNumber();
             addToString(buttons[count].value);
+            getOperators(buttons[count].value);
         }
         else if (buttons[count].classList.contains("delete") ) {
             deleteAll();
@@ -51,8 +53,8 @@ function deleteAll() {
 //adds current button to stringNum for later operations
 function addToString(item) {
     console.log("addToString");
-    obj.stringNum += item;
-    console.log(obj.stringNum);
+    stringNum += item;
+    updateOutput();
 }
 
 //Calculator Functions
@@ -74,12 +76,19 @@ function divide(num1,num2) {
 
 //Get Operator of stringNum after Error-Check
 function getOperators(item) {
-    operator[n]=item;
-    n++;
+    operator[operatorCount]=item;
+    opIndex[operatorCount]=stringNum.lastIndexOf(item);
+    operatorCount++;
 }
 
 //Update output-value on screen
 function updateOutput() {
     const newOutput = document.querySelector(".output");
-    newOutput.textContent = obj.output;
+    newOutput.textContent = stringNum;
+}
+
+//Get last full Number before operator
+function getNumber() {
+    let newString = stringNum.splice();
+    numCount++;
 }
