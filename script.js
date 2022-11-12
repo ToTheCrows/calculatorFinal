@@ -37,16 +37,14 @@ for (let count = 0; count < buttons.length; count++) {
 function operateAll() {
     let temp=num[0];
     let sum=0;
-
+    //Error Evaluation if last input was just an operator
     if( isNaN(num[numCount-1])) {
         stringNum = "ERROR";
             updateOutput();
             return;
     }
-
+    //operate inputs from left to right (no priority for multi and divide)
     for( let n=1; n < numCount; n++) {
-        console.log("inside for loop");
-        console.log(operator[n-1]);
         switch ( operator[n-1] ) {
             case "+":
                 temp=add(temp,num[n]);
@@ -62,10 +60,11 @@ function operateAll() {
             break;
         }
     }
+    //Clear Output, and store Sum in num[0] so user can use it for further
+    //operations
     deleteAll();
     num[0]=temp;
     stringNum=temp.toString();
-    console.log(num);
 }
 
 //sets obj-values back when "C" button is pressed
@@ -106,6 +105,7 @@ function divide(num1, num2) {
 
 //Get Operator of stringNum after Error-Check
 function getOperators(item) {
+    //check, if user inputs 2 operators after another
     let errorEval = stringNum[stringNum.length - 2];
     switch (errorEval) {
         case "+":
